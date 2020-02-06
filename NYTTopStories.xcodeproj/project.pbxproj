@@ -3,10 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		583ADD5A23EC86260022E9EE /* NYTTopStoriesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583ADD5923EC86260022E9EE /* NYTTopStoriesAPIClient.swift */; };
+		583ADD5E23EC86BD0022E9EE /* ImageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 583ADD5D23EC86BD0022E9EE /* ImageKit */; };
 		58A2CBDB23EC6B8800EC4AEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A2CBDA23EC6B8800EC4AEE /* AppDelegate.swift */; };
 		58A2CBDD23EC6B8800EC4AEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A2CBDC23EC6B8800EC4AEE /* SceneDelegate.swift */; };
 		58A2CBE423EC6B8900EC4AEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58A2CBE323EC6B8900EC4AEE /* Assets.xcassets */; };
@@ -30,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		583ADD5923EC86260022E9EE /* NYTTopStoriesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NYTTopStoriesAPIClient.swift; sourceTree = "<group>"; };
 		58A2CBD723EC6B8800EC4AEE /* NYTTopStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NYTTopStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A2CBDA23EC6B8800EC4AEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58A2CBDC23EC6B8800EC4AEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -51,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				583ADD5E23EC86BD0022E9EE /* ImageKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +68,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		583ADD5B23EC863F0022E9EE /* Network Services */ = {
+			isa = PBXGroup;
+			children = (
+				583ADD5923EC86260022E9EE /* NYTTopStoriesAPIClient.swift */,
+			);
+			path = "Network Services";
+			sourceTree = "<group>";
+		};
 		58A2CBCE23EC6B8800EC4AEE = {
 			isa = PBXGroup;
 			children = (
@@ -87,6 +99,7 @@
 			children = (
 				58BEC84223EC711B00680F3E /* Views */,
 				58A2CBFE23EC6C4800EC4AEE /* Controllers */,
+				583ADD5B23EC863F0022E9EE /* Network Services */,
 				58BEC83B23EC6E2100680F3E /* Supporting Files */,
 				58A2CBE823EC6B8900EC4AEE /* Info.plist */,
 			);
@@ -148,6 +161,9 @@
 			dependencies = (
 			);
 			name = NYTTopStories;
+			packageProductDependencies = (
+				583ADD5D23EC86BD0022E9EE /* ImageKit */,
+			);
 			productName = NYTTopStories;
 			productReference = 58A2CBD723EC6B8800EC4AEE /* NYTTopStories.app */;
 			productType = "com.apple.product-type.application";
@@ -198,6 +214,9 @@
 				Base,
 			);
 			mainGroup = 58A2CBCE23EC6B8800EC4AEE;
+			packageReferences = (
+				583ADD5C23EC86BD0022E9EE /* XCRemoteSwiftPackageReference "ImageKit" */,
+			);
 			productRefGroup = 58A2CBD823EC6B8800EC4AEE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -239,6 +258,7 @@
 				58BEC84423EC715900680F3E /* NewsFeedView.swift in Sources */,
 				58BEC83D23EC6E6300680F3E /* NewsFeedViewController.swift in Sources */,
 				58BEC84123EC6E8A00680F3E /* SettingsViewController.swift in Sources */,
+				583ADD5A23EC86260022E9EE /* NYTTopStoriesAPIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -497,6 +517,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		583ADD5C23EC86BD0022E9EE /* XCRemoteSwiftPackageReference "ImageKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/alexpaul/ImageKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		583ADD5D23EC86BD0022E9EE /* ImageKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 583ADD5C23EC86BD0022E9EE /* XCRemoteSwiftPackageReference "ImageKit" */;
+			productName = ImageKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 58A2CBCF23EC6B8800EC4AEE /* Project object */;
 }
