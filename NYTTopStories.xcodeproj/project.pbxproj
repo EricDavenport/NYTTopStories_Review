@@ -10,6 +10,7 @@
 		583ADD5A23EC86260022E9EE /* NYTTopStoriesAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583ADD5923EC86260022E9EE /* NYTTopStoriesAPIClient.swift */; };
 		583ADD5E23EC86BD0022E9EE /* ImageKit in Frameworks */ = {isa = PBXBuildFile; productRef = 583ADD5D23EC86BD0022E9EE /* ImageKit */; };
 		583ADD6123EC88BC0022E9EE /* NewsFeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583ADD6023EC88BC0022E9EE /* NewsFeedModel.swift */; };
+		583ADD6323EC8BDC0022E9EE /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 583ADD6223EC8BDC0022E9EE /* Config.swift */; };
 		58A2CBDB23EC6B8800EC4AEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A2CBDA23EC6B8800EC4AEE /* AppDelegate.swift */; };
 		58A2CBDD23EC6B8800EC4AEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A2CBDC23EC6B8800EC4AEE /* SceneDelegate.swift */; };
 		58A2CBE423EC6B8900EC4AEE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 58A2CBE323EC6B8900EC4AEE /* Assets.xcassets */; };
@@ -35,6 +36,7 @@
 /* Begin PBXFileReference section */
 		583ADD5923EC86260022E9EE /* NYTTopStoriesAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NYTTopStoriesAPIClient.swift; sourceTree = "<group>"; };
 		583ADD6023EC88BC0022E9EE /* NewsFeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsFeedModel.swift; sourceTree = "<group>"; };
+		583ADD6223EC8BDC0022E9EE /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		58A2CBD723EC6B8800EC4AEE /* NYTTopStories.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NYTTopStories.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		58A2CBDA23EC6B8800EC4AEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		58A2CBDC23EC6B8800EC4AEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				58A2CBDC23EC6B8800EC4AEE /* SceneDelegate.swift */,
 				58A2CBE323EC6B8900EC4AEE /* Assets.xcassets */,
 				58A2CBE523EC6B8900EC4AEE /* LaunchScreen.storyboard */,
+				583ADD6223EC8BDC0022E9EE /* Config.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -269,6 +272,7 @@
 				58BEC84423EC715900680F3E /* NewsFeedView.swift in Sources */,
 				583ADD6123EC88BC0022E9EE /* NewsFeedModel.swift in Sources */,
 				58BEC83D23EC6E6300680F3E /* NewsFeedViewController.swift in Sources */,
+				583ADD6323EC8BDC0022E9EE /* Config.swift in Sources */,
 				58BEC84123EC6E8A00680F3E /* SettingsViewController.swift in Sources */,
 				583ADD5A23EC86260022E9EE /* NYTTopStoriesAPIClient.swift in Sources */,
 			);
