@@ -7,10 +7,25 @@
 //
 
 import UIKit
+import DataPersistence
 
 class NewsFeedViewController: UIViewController {
   
-  private var newsFeedView = NewsFeedView()
+  private let newsFeedView = NewsFeedView()
+  
+  // step 2: setting up data persistence and its delegate
+  // since we need an instance passed to the ArticleDetailViewController we declare a dataPersistence here
+  public var dataPersistence: DataPersistence<Article>!
+  
+  // data for our collection view
+  private var newsArticles = [Article]() {
+    didSet {
+      DispatchQueue.main.async {
+        self.newsFeedView.collectionView.reloadData()
+        self.navigationItem.title = (self.newsArticles.first?.section.capitalized ?? " ") + " News"
+      }
+    }
+  }
   
   override func loadView() {
     view = newsFeedView
@@ -18,42 +33,65 @@ class NewsFeedViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // setting up collection view data source and delegate
+    view.backgroundColor = .systemBackground // white when dark mode is off, black when dark mode is on
+    
+    // setting up collection datasource and delegate
     newsFeedView.collectionView.dataSource = self
     newsFeedView.collectionView.delegate = self
     
-    // register the cell for collection view
-    newsFeedView.collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "articleCell")
+    // register a collection view cell
+    newsFeedView.collectionView.register(NewsCell.self, forCellWithReuseIdentifier: "articleCell")
     
-    view.backgroundColor = .systemBackground  // white when dark mode is off - black when dark mode on
+    fetchStories()
   }
   
-  
+  private func fetchStories(for section: String = "Technology") {
+    NYTTopStoriesAPIClient.fetchTopStories(for: section) { [weak self] (result) in
+      switch result {
+      case .failure(let appError):
+        print("error fetching stories: \(appError)")
+      case .success(let articles):
+        self?.newsArticles = articles
+      }
+    }
+  }
 }
 
-
-extension NewsFeedViewController : UICollectionViewDataSource {
+extension NewsFeedViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return 50
+    return newsArticles.count
   }
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "articleCell", for: indexPath)
-    cell.backgroundColor = .white
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "articleCell", for: indexPath) as? NewsCell else {
+      fatalError("could not downcast to NewsCell")
+    }
+    let article = newsArticles[indexPath.row]
+    cell.configureCell(with: article)
+    cell.backgroundColor = .systemBackground
     return cell
   }
-  
- 
 }
 
-extension NewsFeedViewController : UICollectionViewDelegateFlowLayout {
+extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
   // return item size
-  // itemHeight ~ 30% of nheight devide
-  // itemWidth ~ 100% of width of device
+  // itemHeight ~ 30% of height of device
+  // itemWidth = 100% of width of device
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-      let maxSize : CGSize = UIScreen.main.bounds.size
+    let maxSize: CGSize = UIScreen.main.bounds.size
     let itemWidth: CGFloat = maxSize.width
-    let itemHeight: CGFloat = maxSize.height * 0.30  // 30%
+    let itemHeight: CGFloat = maxSize.height * 0.20 // 30%
     return CGSize(width: itemWidth, height: itemHeight)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let article = newsArticles[indexPath.row]
+    let articleDVC = ArticleDetailViewController()
+    // TODO: after assessement we will be using initializers as dependency injection mechanisms
+    articleDVC.article = article
+    
+    // step 3: setting up data persistence and its delegate
+    articleDVC.dataPersistence = dataPersistence
+    navigationController?.pushViewController(articleDVC, animated: true)
   }
 }
