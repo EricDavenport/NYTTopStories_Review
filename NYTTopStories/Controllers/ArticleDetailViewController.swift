@@ -53,6 +53,7 @@ class ArticleDetailViewController: UIViewController {
   }
   
   @objc func saveArticleButtonPressed(_ sender: UIBarButtonItem) {
+    navigationItem.rightBarButtonItem?.image = UIImage(systemName: "bookmark.fill")
     guard let article = article else { return }
     do {
       // save to documents directory

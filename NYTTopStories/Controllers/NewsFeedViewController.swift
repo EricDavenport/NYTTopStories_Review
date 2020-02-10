@@ -27,6 +27,13 @@ class NewsFeedViewController: UIViewController {
     }
   }
   
+  private var sectionName = "Technology" {
+    didSet {
+      queryAPI(for: sectionName)
+    }
+  }
+  
+  
   override func loadView() {
     view = newsFeedView
   }
@@ -41,11 +48,28 @@ class NewsFeedViewController: UIViewController {
     
     // register a collection view cell
     newsFeedView.collectionView.register(NewsCell.self, forCellWithReuseIdentifier: "articleCell")
-    
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(true)
     fetchStories()
   }
   
   private func fetchStories(for section: String = "Technology") {
+    // retrieve section name from UserDefaults
+    if let thisSectionName = UserDefaults.standard.object(forKey: UserKey.newsSection) as? String {
+      if thisSectionName != self.sectionName {
+        // we are looking at a new section
+        // make a new query
+        queryAPI(for: thisSectionName)
+      }
+    } else {
+      // use the default section name
+      queryAPI(for: self.sectionName)
+    }
+  }
+    
+    private func queryAPI(for section: String) {
     NYTTopStoriesAPIClient.fetchTopStories(for: section) { [weak self] (result) in
       switch result {
       case .failure(let appError):
@@ -56,6 +80,7 @@ class NewsFeedViewController: UIViewController {
     }
   }
 }
+
 
 extension NewsFeedViewController: UICollectionViewDataSource {
   func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
