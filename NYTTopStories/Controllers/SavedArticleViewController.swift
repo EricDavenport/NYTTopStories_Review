@@ -100,12 +100,12 @@ extension SavedArticleViewController : UICollectionViewDataSource {
 
 extension SavedArticleViewController: DataPersistenceDelegate {
   func didSaveItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
-    print("ites was saved")
+    print("item was saved")
     fetchSavedArticles()
   }
   
   func didDeleteItem<T>(_ persistenceHelper: DataPersistence<T>, item: T) where T : Decodable, T : Encodable, T : Equatable {
-    print("ites was deleted")
+    fetchSavedArticles()
   }
 }
 
@@ -122,9 +122,22 @@ extension SavedArticleViewController : SavedArticleCellDelegate {
     let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
     let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (alertAction) in
       // TODO: write a delete helper function
+      self.deleteArticle(article)
     }
     alertController.addAction(cancelAction)
     alertController.addAction(deleteAction)
     present(alertController, animated: true)
   }
+  
+  private func deleteArticle(_ article: Article) {
+    guard let index = savedArticles.firstIndex(of: article) else {
+      return
+    }
+    do {
+      try dataPersistence.deleteItem(at: index)
+    } catch {
+      fetchSavedArticles()
+    }
+  }
+  
 }

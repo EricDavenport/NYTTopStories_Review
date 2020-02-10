@@ -1,5 +1,5 @@
 //
-//  AtricltDetailViewController.swift
+//  ArticleDetailViewController.swift
 //  NYTTopStories
 //
 //  Created by Eric Davenport on 2/10/20.
