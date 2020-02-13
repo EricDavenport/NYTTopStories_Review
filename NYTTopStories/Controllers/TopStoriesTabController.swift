@@ -15,19 +15,14 @@ class TopStoriesTabController: UITabBarController {
   private var dataPersistence = DataPersistence<Article>(filename: "savedArticles.plist")
   
   private lazy var newsFeedVC: NewsFeedViewController = {
-    let viewController = NewsFeedViewController()
+    let viewController = NewsFeedViewController(dataPersistence)
     viewController.tabBarItem = UITabBarItem(title: "News Feed", image: UIImage(systemName: "eye"), tag: 0)
     viewController.tabBarItem.selectedImage = UIImage(systemName: "eye.fill")
-    viewController.dataPersistence = dataPersistence
     return viewController
   }()
   
   private lazy var savedArticlesVC: SavedArticleViewController = {
-    let viewController = SavedArticleViewController()
-    viewController.dataPersistence = dataPersistence
-    
-    // step 6: setting up data persistence and its delegate
-    viewController.dataPersistence.delegate = viewController
+    let viewController = SavedArticleViewController(dataPersistence)
     viewController.tabBarItem = UITabBarItem(title: "Saved Articles", image: UIImage(systemName: "folder"), tag: 1)
     viewController.tabBarItem.selectedImage = UIImage(systemName: "folder.fill")
     return viewController

@@ -14,7 +14,7 @@ class SavedArticleViewController: UIViewController {
   private let savedArticleView = SavedArticleView()
   
   // step 4: setting up data persistence and its delegate
-  public var dataPersistence: DataPersistence<Article>!
+  private var dataPersistence: DataPersistence<Article>
   
   // TODO: create a SavedArticleView
   // TODO: add a collection view to the SavedArticleView
@@ -28,13 +28,25 @@ class SavedArticleViewController: UIViewController {
       savedArticleView.collectionView.reloadData()
       if savedArticles.isEmpty {
         // setup our empty view
-        savedArticleView.collectionView.backgroundView = EmptyView(title: "Saved Articles", messagee: "There are currently no saved articles. Start browsing by on the news icon")
+        savedArticleView.collectionView.backgroundView = EmptyView(title: "Saved Article", message: "There are currently no saved articles. Begin by clicking the news icon.")
       } else {
         // remove the empty view from the collection view background view
         savedArticleView.collectionView.backgroundView = nil
       }
     }
   }
+  
+  init(_ dataPersistence: DataPersistence<Article>) {
+    self.dataPersistence = dataPersistence
+    super.init(nibName: nil, bundle: nil)
+    self.dataPersistence.delegate = self
+  }
+    
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+//  EmptyView(title: "Saved Articles", message: "There are currently no saved articles. Start browsing by on the news icon")
   override func loadView() {
     view = savedArticleView
   }
@@ -43,7 +55,8 @@ class SavedArticleViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .systemBackground
-    dataPersistence.delegate = self
+    // leaving dataPersistence.delegate = self in viewDidLoad makes initalizer too late - must occur before loading
+//    dataPersistence.delegate = self
     savedArticleView.collectionView.dataSource = self
     savedArticleView.collectionView.delegate = self
     savedArticleView.collectionView.register(SavedArticleCell.self, forCellWithReuseIdentifier: "savedArticleCell")
@@ -81,12 +94,10 @@ extension SavedArticleViewController: UICollectionViewDelegateFlowLayout {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     // programmatically segue
     let article = savedArticles[indexPath.row]
-    let detailVC = ArticleDetailViewController()
+    let detailVC = ArticleDetailViewController(dataPersistence, article: article)
     
-    detailVC.article = article
-    detailVC.dataPersistence = dataPersistence
     
-    navigationController?.pushViewController(detailVC, animated: true)
+    navigationController?.pushViewController(detailVC, animated: true )
     
   }
 }

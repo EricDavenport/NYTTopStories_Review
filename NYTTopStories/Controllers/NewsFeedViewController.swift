@@ -15,7 +15,7 @@ class NewsFeedViewController: UIViewController {
   
   // step 2: setting up data persistence and its delegate
   // since we need an instance passed to the ArticleDetailViewController we declare a dataPersistence here
-  public var dataPersistence: DataPersistence<Article>!
+  private var dataPersistence: DataPersistence<Article>!
   
   // data for our collection view
   private var newsArticles = [Article]() {
@@ -33,6 +33,14 @@ class NewsFeedViewController: UIViewController {
     }
   }
   
+  init(_ dataPersistence: DataPersistence<Article>) {
+    self.dataPersistence = dataPersistence
+    super.init(nibName: nil, bundle: nil)
+  }
+
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func loadView() {
     view = newsFeedView
@@ -48,6 +56,8 @@ class NewsFeedViewController: UIViewController {
     
     // register a collection view cell
     newsFeedView.collectionView.register(NewsCell.self, forCellWithReuseIdentifier: "articleCell")
+    
+    newsFeedView.searchBar.delegate = self
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -62,6 +72,8 @@ class NewsFeedViewController: UIViewController {
         // we are looking at a new section
         // make a new query
         queryAPI(for: thisSectionName)
+      } else {
+        queryAPI(for: self.sectionName)
       }
     } else {
       // use the default section name
@@ -111,12 +123,32 @@ extension NewsFeedViewController: UICollectionViewDelegateFlowLayout {
   
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let article = newsArticles[indexPath.row]
-    let articleDVC = ArticleDetailViewController()
-    // TODO: after assessement we will be using initializers as dependency injection mechanisms
-    articleDVC.article = article
+    // using initializers as dependency injection mechanisms
+    let articleDVC = ArticleDetailViewController(dataPersistence, article: article)
     
     // step 3: setting up data persistence and its delegate
-    articleDVC.dataPersistence = dataPersistence
     navigationController?.pushViewController(articleDVC, animated: true)
+  }
+  
+  func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    if newsFeedView.searchBar.isFirstResponder {
+      newsFeedView.searchBar.resignFirstResponder()
+    }
+  }
+  
+}
+
+extension NewsFeedViewController : UISearchBarDelegate {
+  func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+    guard !searchText.isEmpty else {
+      // if text is empty reload sall the articles
+      fetchStories()
+      return
+    }
+    // filter articles based on searchText
+    newsArticles = newsArticles.filter {
+      $0.title.lowercased().contains(searchText.lowercased()) }
+    print(searchText)
+    resignFirstResponder()
   }
 }

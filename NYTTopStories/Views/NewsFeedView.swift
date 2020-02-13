@@ -10,7 +10,7 @@ import UIKit
 
 class NewsFeedView: UIView {
   
-  public lazy var searchBsar : UISearchBar = {
+  public lazy var searchBar : UISearchBar = {
     let sb = UISearchBar()
     sb.autocapitalizationType = .none
     sb.placeholder = "search article"
@@ -43,16 +43,16 @@ class NewsFeedView: UIView {
   
   private func searchBarContraints() {
     // 1.
-    addSubview(searchBsar)
+    addSubview(searchBar)
     
     // 2.
-    searchBsar.translatesAutoresizingMaskIntoConstraints = false
+    searchBar.translatesAutoresizingMaskIntoConstraints = false
     
     // 3.
     NSLayoutConstraint.activate([
-      searchBsar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-      searchBsar.leadingAnchor.constraint(equalTo: leadingAnchor),
-      searchBsar.trailingAnchor.constraint(equalTo: trailingAnchor)
+      searchBar.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+      searchBar.leadingAnchor.constraint(equalTo: leadingAnchor),
+      searchBar.trailingAnchor.constraint(equalTo: trailingAnchor)
     ])
   }
   
@@ -65,7 +65,7 @@ class NewsFeedView: UIView {
     
     // 3.
     NSLayoutConstraint.activate([
-      collectionView.topAnchor.constraint(equalTo: searchBsar.bottomAnchor),
+      collectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor),
       collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
       collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
       collectionView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor)

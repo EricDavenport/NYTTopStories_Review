@@ -35,10 +35,10 @@ class EmptyView: UIView {
 //    commonInit()
 //  }
   
-  init(title: String, messagee: String) {
+  init(title: String, message: String) {
     super.init(frame: UIScreen.main.bounds)
     titleLabel.text = title
-    messageLabel.text = messagee
+    messageLabel.text = message
     commonInit()
   }
   
@@ -48,11 +48,11 @@ class EmptyView: UIView {
   }
   
   private func commonInit() {
+    setUpMessageLabel()
     setupTitleLabel()
-    setUpMEssageLabel()
   }
   
-  private func setUpMEssageLabel() {
+  private func setUpMessageLabel() {
     addSubview(messageLabel)
     messageLabel.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
@@ -64,13 +64,14 @@ class EmptyView: UIView {
   }
 
   private func setupTitleLabel() {
-  addSubview(titleLabel)
+    addSubview(titleLabel)
     titleLabel.translatesAutoresizingMaskIntoConstraints = false
     NSLayoutConstraint.activate([
-      titleLabel.bottomAnchor.constraint(equalTo: messageLabel.bottomAnchor, constant: -8),
+      titleLabel.bottomAnchor.constraint(equalTo: messageLabel.topAnchor, constant: -8),
       titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
       titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8)
-      ])
+    ])
   }
-
 }
+
+

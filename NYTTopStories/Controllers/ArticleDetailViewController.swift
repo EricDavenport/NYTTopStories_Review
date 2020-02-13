@@ -11,12 +11,24 @@ import DataPersistence
 
 class ArticleDetailViewController: UIViewController {
   
-  public var article: Article?
+  // properties
+  private var article: Article
   
-  public var dataPersistence: DataPersistence<Article>!
+  private var dataPersistence: DataPersistence<Article>
   
   private let detailView = ArticleDetailView()
+  
+  // initializer
+  init(_ dataPersistence: DataPersistence<Article>, article: Article) {
+    self.dataPersistence = dataPersistence
+    self.article = article
+    super.init(nibName: nil, bundle: nil)
+  }
     
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func loadView() {
     view = detailView
   }
@@ -33,9 +45,7 @@ class ArticleDetailViewController: UIViewController {
   private func updateUI() {
     // TODO: refactor and setup in ArticleDetailView
     // e.g detailView.configureView(for article: article)
-    guard let article = article else {
-      fatalError("did not load an article")
-    }
+
     navigationItem.title = article.title
     detailView.abstractHeadline.text = article.abstract
     detailView.newsImageView.getImage(with: article.getArticleImageURL(for: .superJumbo)) { [weak self] (result) in
@@ -54,7 +64,6 @@ class ArticleDetailViewController: UIViewController {
   
   @objc func saveArticleButtonPressed(_ sender: UIBarButtonItem) {
     navigationItem.rightBarButtonItem?.image = UIImage(systemName: "bookmark.fill")
-    guard let article = article else { return }
     do {
       // save to documents directory
       try dataPersistence.createItem(article)
